@@ -2,14 +2,21 @@ spring:
   application:
     name:
       oauth
-
   security:
     oauth2:
       client:
         registration:
-          github:
-            clientId: ${GITHUB_CLIENT_ID}
-            clientSecret: ${GITHUB_CLIENT_SECRET}
-          google:
-            clientId: ${GOOGLE_CLIENT_ID}
-            clientSecret: ${GOOGLE_CLIENT_SECRET}
+          jira:
+            clientId: ${JIRA_CLIENT_ID}
+            clientSecret: ${JIRA_CLIENT_SECRET}
+            authorizationGrantType: authorization_code
+            redirectUri: ${JIRA_CALLBACK_URL}
+            scope:
+              - read:me
+              - read:jira-work
+        provider:
+          jira:
+            authorizationUri: https://auth.atlassian.com/authorize?audience=api.atlassian.com
+            tokenUri: https://auth.atlassian.com/oauth/token
+            userInfoUri: https://api.atlassian.com/me
+            userNameAttribute: account_id
